@@ -73,7 +73,6 @@
 (global-set-key (kbd "M-O") 'forward-paragraph)
 
 (global-set-key (kbd "C-w") 'kill-buffer)
-(global-set-key (kbd "M-w") 'kill-buffer)
 
 ;; Parentheses
 (show-paren-mode 1) ; highlight paired parentheses
@@ -163,6 +162,17 @@
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; python
+(require 'python-mode)
+(defun my-python-mode-hook ()
+  ;; (c-set-style "bsd")
+  ;; (setq c-basic-offset 4)
+  (hs-minor-mode)
+  (local-set-key (kbd "RET") 'c-context-line-break)
+  ;; (flymake-php-load)
+  ;; (ac-php-mode-setup)
+  (projectile-on)
+)
+(add-hook 'python-mode-hook 'my-python-mode-hook)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Maxima
