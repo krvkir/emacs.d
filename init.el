@@ -47,32 +47,32 @@
 
 ;; Ergoemacs
 (require 'ergoemacs-mode)
-(setq ergoemacs-theme "lvl2")
+(setq ergoemacs-theme "standard")
 (ergoemacs-mode 1)
 
 ;; lvl2.5 handcrafted
-(global-set-key (kbd "M-s") 'other-window)
-(global-set-key (kbd "M-h") 'beginning-of-visual-line)
-(global-set-key (kbd "M-H") 'end-of-visual-line)
-(global-set-key (kbd "M-a") 'execute-extended-command)
+;; (global-set-key (kbd "M-s") 'other-window)
+;; (global-set-key (kbd "M-h") 'beginning-of-visual-line)
+;; (global-set-key (kbd "M-H") 'end-of-visual-line)
+;; (global-set-key (kbd "M-a") 'execute-extended-command)
 
-(global-set-key (kbd "M-z") 'undo)
-(global-set-key (kbd "M-x") 'kill-region)
-(global-set-key (kbd "M-c") 'kill-ring-save)
-(global-set-key (kbd "M-v") 'yank)
-(global-set-key (kbd "M-V") 'yank-pop)
+;; (global-set-key (kbd "M-z") 'undo)
+;; (global-set-key (kbd "M-x") 'kill-region)
+;; (global-set-key (kbd "M-c") 'kill-ring-save)
+;; (global-set-key (kbd "M-v") 'yank)
+;; (global-set-key (kbd "M-V") 'yank-pop)
 
-(global-set-key (kbd "M-p") 'recenter-top-bottom)
-(global-set-key (kbd "C-.") 'keyboard-quit)
+;; (global-set-key (kbd "M-p") 'recenter-top-bottom)
+;; (global-set-key (kbd "C-.") 'keyboard-quit)
 
-(global-set-key (kbd "M-J") 'backward-sexp)
-(global-set-key (kbd "M-L") 'forward-sexp)
-(global-set-key (kbd "M-I") 'scroll-down-command)
-(global-set-key (kbd "M-K") 'scroll-up-command)
-(global-set-key (kbd "M-U") 'backward-paragraph)
-(global-set-key (kbd "M-O") 'forward-paragraph)
+;; (global-set-key (kbd "M-J") 'backward-sexp)
+;; (global-set-key (kbd "M-L") 'forward-sexp)
+;; (global-set-key (kbd "M-I") 'scroll-down-command)
+;; (global-set-key (kbd "M-K") 'scroll-up-command)
+;; (global-set-key (kbd "M-U") 'backward-paragraph)
+;; (global-set-key (kbd "M-O") 'forward-paragraph)
 
-(global-set-key (kbd "C-w") 'kill-buffer)
+;; (global-set-key (kbd "C-w") 'kill-buffer)
 
 ;; Parentheses
 (show-paren-mode 1) ; highlight paired parentheses
@@ -89,7 +89,7 @@
 
 ;; Lines
 (global-linum-mode) ; line numbers
-(setq-default truncate-lines nil)
+(setq-default truncate-lines t)
 (global-visual-line-mode)
 
 ;; Buffers
@@ -162,7 +162,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; python
-(require 'python-mode)
+;; (require 'python-mode)
 (defun my-python-mode-hook ()
   ;; (c-set-style "bsd")
   ;; (setq c-basic-offset 4)
