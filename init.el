@@ -5,16 +5,80 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" default)))
+ '(custom-safe-themes
+   (quote
+    ("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" default)))
  '(default-input-method "russian-computer")
  '(ecb-auto-activate nil)
  '(ecb-auto-compatibility-check nil)
+ '(ecb-compile-window-height 6)
+ '(ecb-compile-window-temporally-enlarge (quote both))
+ '(ecb-compile-window-width (quote edit-window))
  '(ecb-history-make-buckets (quote mode))
- '(ecb-layout-name "leftright2")
- '(ecb-layout-window-sizes (quote (("leftright2" (ecb-directories-buffer-name 0.08 . 0.635) (ecb-sources-buffer-name 0.08 . 0.35) (ecb-methods-buffer-name 0.14 . 0.635) (ecb-history-buffer-name 0.14 . 0.35)) ("leftright1" (ecb-directories-buffer-name 0.18 . 0.63) (ecb-sources-buffer-name 0.1787709497206704 . 0.17) (ecb-history-buffer-name 0.18 . 0.185) (ecb-methods-buffer-name 0.162 . 0.99)))))
+ '(ecb-key-map
+   (quote
+    ("<f4>"
+     (t "fh" ecb-history-filter)
+     (t "fs" ecb-sources-filter)
+     (t "fm" ecb-methods-filter)
+     (t "fr" ecb-methods-filter-regexp)
+     (t "ft" ecb-methods-filter-tagclass)
+     (t "fc" ecb-methods-filter-current-type)
+     (t "fp" ecb-methods-filter-protection)
+     (t "fn" ecb-methods-filter-nofilter)
+     (t "fl" ecb-methods-filter-delete-last)
+     (t "ff" ecb-methods-filter-function)
+     (t "p" ecb-nav-goto-previous)
+     (t "n" ecb-nav-goto-next)
+     (t "lc" ecb-change-layout)
+     (t "lr" ecb-redraw-layout)
+     (t "lw" ecb-toggle-ecb-windows)
+     (t "lt" ecb-toggle-layout)
+     (t "s" ecb-window-sync)
+     (t "r" ecb-rebuild-methods-buffer)
+     (t "a" ecb-toggle-auto-expand-tag-tree)
+     (t "x" ecb-expand-methods-nodes)
+     (t "h" ecb-show-help)
+     (t "gl" ecb-goto-window-edit-last)
+     (t "g1" ecb-goto-window-edit1)
+     (t "g2" ecb-goto-window-edit2)
+     (t "gc" ecb-goto-window-compilation)
+     (t "gd" ecb-goto-window-directories)
+     (t "gs" ecb-goto-window-sources)
+     (t "gm" ecb-goto-window-methods)
+     (t "gh" ecb-goto-window-history)
+     (t "ga" ecb-goto-window-analyse)
+     (t "gb" ecb-goto-window-speedbar)
+     (t "md" ecb-maximize-window-directories)
+     (t "ms" ecb-maximize-window-sources)
+     (t "mm" ecb-maximize-window-methods)
+     (t "mh" ecb-maximize-window-history)
+     (t "ma" ecb-maximize-window-analyse)
+     (t "mb" ecb-maximize-window-speedbar)
+     (t "e" eshell)
+     (t "o" ecb-toggle-scroll-other-window-scrolls-compile)
+     (t "\\" ecb-toggle-compile-window)
+     (t "/" ecb-toggle-compile-window-height)
+     (t "," ecb-cycle-maximized-ecb-buffers)
+     (t "." ecb-cycle-through-compilation-buffers))))
+ '(ecb-layout-name "leftright1")
+ '(ecb-layout-window-sizes
+   (quote
+    (("leftright1"
+      (ecb-directories-buffer-name 0.03 . 0.65)
+      (ecb-sources-buffer-name 0.03 . 0.35)
+      (ecb-methods-buffer-name 0.1 . 0.65)
+      (ecb-history-buffer-name 0.1 . 0.35))
+     ("leftright1"
+      (ecb-directories-buffer-name 0.18 . 0.63)
+      (ecb-sources-buffer-name 0.1787709497206704 . 0.17)
+      (ecb-history-buffer-name 0.18 . 0.185)
+      (ecb-methods-buffer-name 0.162 . 0.99)))))
  '(ecb-options-version "2.40")
  '(ecb-primary-secondary-mouse-buttons (quote mouse-1--C-mouse-1))
  '(ecb-source-path (quote (("/" "/"))))
+ '(ecb-tree-navigation-by-arrow nil)
+ '(ecb-windows-width 0.3)
  '(org-catch-invisible-edits (quote smart))
  '(org-src-fontify-natively t)
  '(word-wrap t))
@@ -32,10 +96,10 @@
 ;; disable backup files
 (setq make-backup-files nil)
 
-;; bookmarks
-(global-set-key (kbd "C-b") 'bookmark-set)
-(global-set-key (kbd "M-b") 'bookmark-jump)
-(global-set-key (kbd "<f4>") 'bookmark-bmenu-list)
+;; ;; bookmarks
+;; (global-set-key (kbd "C-b") 'bookmark-set)
+;; (global-set-key (kbd "M-b") 'bookmark-jump)
+;; (global-set-key (kbd "<f4>") 'bookmark-bmenu-list)
 
 ;; file paths in status line
 (require 'uniquify)
@@ -62,6 +126,15 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Interface
+
+;;;;;;;;;;;;;;;;;;;;
+;; Ergoemacs
+(require 'ergoemacs-mode)
+(load-file "~/.emacs.d/my/cfg-ergoemacs.el")
+(ergoemacs-mode 1)
+
+;;;;;;;;;;;;;;;;;;;;
+;; Tuning
 
 ;; disable beeps
 (setq ring-bell-function 'ignore)
@@ -111,13 +184,19 @@
 (setq ecb-tip-of-the-day nil)
 
 (global-semantic-idle-scheduler-mode t)
-;; (global-semantic-idle-completions-mode t)
-;; (global-semantic-idle-summary-mode t)
+(global-semantic-idle-completions-mode t)
+(global-semantic-idle-summary-mode t)
 
 (global-semantic-decoration-mode t)
 (global-semantic-highlight-func-mode t)
 
-(semantic-mode 1)
+(global-unset-key (kbd "<f4>"))
+(defun krvkir-ecb-activate-hook ()
+  ;; Turning on
+  (semantic-mode t)
+  )
+(add-hook 'ecb-activate-hook 'krvkir-ecb-activate-hook)
+
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Auto-complete
@@ -125,18 +204,22 @@
 (require 'auto-complete-config)
 (ac-config-default)
 
-;; ;; Eclim
-;; (require 'eclim)
-;; (global-eclim-mode)
-;; ;; autocompletion via eclim
-;; (require 'ac-emacs-eclim-source)
-;; (ac-emacs-eclim-config)
+;; Eclim
+(require 'eclim)
+(global-eclim-mode)
+;; autocompletion via eclim
+(require 'ac-emacs-eclim-source)
+(defun krvkir-eclim-mode-hook ()
+  (define-key eclim-mode-map (kbd "C-c C-c") 'eclim-project-build)
+  )
+(add-hook 'eclim-mode-hook 'krvkir-eclim-mode-hook)
+
+(ac-emacs-eclim-config)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Version control
 (setq vc-annotate-background nil)
 (setq vc-annotate-very-old-color nil)
-(add-hook 'ecb-activate-hook (lambda () (semantic-mode t)))
 ;; ;; svn
 ;; (require 'vc-svn)
 ;; (autoload 'svn-status "dsvn" "Run `svn status'." t)
@@ -149,22 +232,24 @@
 ;; (yas/load-directory "~/.emacs.d/my/snippets")
 ;; (global-set-key (kbd "M-RET") 'yas/exit-all-snippets)
 
-;;;;;;;;;;;;;;;;;;;;
-;; Projectile
-(require 'projectile)
-(projectile-global-mode)
-(setq projectile-tags-command "ctags -R -e %s")
-;; bindings
-;; ;; tags
-;; (global-set-key (kbd "<f3>") 'visit-tags-table)
+;; ;;;;;;;;;;;;;;;;;;;;
+;; ;; Projectile
+;; (require 'projectile)
+;; (projectile-global-mode)
+;; (setq projectile-tags-command "ctags -R -e %s")
+;; ;; bindings
+;; ;; ;; tags
+;; ;; (global-set-key (kbd "<f3>") 'visit-tags-table)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hideshow
 (require 'hideshow)
+(global-unset-key (kbd "<f3>"))
 (global-set-key (kbd "C-M-f") 'hs-toggle-hiding)
-(global-set-key (kbd "<f3>") 'hs-toggle-hiding)
-(global-set-key (kbd "C-<f3>") 'hs-hide-all)
-(global-set-key (kbd "C-S-<f3>") 'hs-show-all)
+(global-set-key (kbd "<f3> t") 'hs-toggle-hiding)
+(global-set-key (kbd "<f3> h") 'hs-hide-all)
+(global-set-key (kbd "<f3> s") 'hs-show-all)
+(global-set-key (kbd "<f3> l") 'hs-hide-level)
 
 ;; Indentation
 (setq-default indent-tabs-mode nil)
@@ -187,14 +272,16 @@
 ;; Python
 ;; elpy
 (elpy-enable)
-(setq elpy-rpc-backend "jedi")
+;; (setq elpy-rpc-backend "jedi")
 ;; custom tweaks
 (defun my-python-mode-hook ()
   ;; (set-input-method "TeX")
   (hs-minor-mode)
-  (projectile-on)
-  (jedi:ac-setup))
+  ;; (projectile-on)
+  ;; (jedi:ac-setup)
+  )
 (add-hook 'python-mode-hook 'my-python-mode-hook)
+(setenv "PYTHONPATH" "/home/krvkir/workspace/Frwk/mod/")
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Haskell
@@ -202,24 +289,33 @@
   (turn-on-haskell-indentation))
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 
-;; ;;;;;;;;;;;;;;;;;;;;
-;; ;; PHP
-;; (require 'php-mode)
-;; (require 'flymake-php)
-;; (defun my-php-mode-hook ()
-;;   (c-set-style "bsd")
-;;   (setq c-basic-offset 4)
-;;   (hs-minor-mode)
-;;   (local-set-key (kbd "RET") 'c-context-line-break)
-;;   (flymake-php-load)
-;;   (ac-php-mode-setup)
-;;   (projectile-on))
-;; (add-hook 'php-mode-hook 'my-php-mode-hook)
+;;;;;;;;;;;;;;;;;;;;
+;; Octave/Matlab
+(delete 'auto-mode-alist '("\\.m\\'" . objc-mode))
+(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+
+;;;;;;;;;;;;;;;;;;;;
+;; PHP
+(require 'php-mode)
+(require 'flymake-php)
+(defun krvkir-php-mode-hook ()
+  ;; code style
+  (c-set-style "bsd")
+  (setq c-basic-offset 4)
+  ;; code editing 
+  (hs-minor-mode)
+  (local-set-key (kbd "RET") 'c-context-line-break)
+  (flymake-php-load)
+  ;; (ac-php-mode-setup)
+  ;; other
+  ;; (projectile-on)
+  )
+(add-hook 'php-mode-hook 'krvkir-php-mode-hook)
 ;; ;; interpreter in emacs shell
 ;; (require 'php-inf)
-;; ;; helpers
-;; (load-file "~/.emacs.d/my/php-helpers.el")
-;; (load-file "~/.emacs.d/my/phpdocumentor.el")
+;; helpers
+(load-file "~/.emacs.d/my/php-helpers.el")
+(load-file "~/.emacs.d/my/phpdocumentor.el")
 
 ;; ;;;;;;;;;;;;;;;;;;;;
 ;; ;; JavaScript
@@ -237,21 +333,12 @@
 ;; (load-file "~/.emacs.d/my/ampl-mode.el")
 
 
-;;;;;;;;;;;;;;;;;;;;
-;; Dired
-(defun my-dired-mode-hook ()
-  ;; Open files in external app
-  (local-set-key (kbd "<f3>") 'ergoemacs-open-in-external-app))
-(add-hook 'dired-mode-hook 'my-dired-mode-hook)
-
-;;;;;;;;;;;;;;;;;;;;
-;; Ergoemacs
-;; ergoemacs
-(setq debug-on-error t)
-(require 'ergoemacs-mode)
-(setq ergoemacs-debug t)
-(load-file "~/.emacs.d/my/cfg-ergoemacs.el")
-(ergoemacs-mode 1)
+;; ;;;;;;;;;;;;;;;;;;;;
+;; ;; Dired
+;; (defun my-dired-mode-hook ()
+;;   ;; Open files in external app
+;;   (local-set-key (kbd "<f3>") 'ergoemacs-open-in-external-app))
+;; (add-hook 'dired-mode-hook 'my-dired-mode-hook)
 
 
 

@@ -36,6 +36,28 @@
 
 ;; Org-mode keybindings
 (defun my-org-mode-hook ()
+  ;;;;;;;;;;;;;;;;;;;;
+  ;; Actions
+  ;; refile and set-tags
+  (define-key org-mode-map (kbd "<f5> r") 'org-refile)
+  (define-key org-mode-map (kbd "<f5> t") 'org-set-tags)
+  ;; priority
+  (define-key org-mode-map (kbd "<f5> p") 'org-priority)
+  ;; archive
+  (define-key org-mode-map (kbd "<f5> a") 'org-archive-subtree)
+  ;; mobile
+  (define-key org-mode-map (kbd "<f5> m g") 'org-mobile-pull)
+  (define-key org-mode-map (kbd "<f5> m p") 'org-mobile-push)
+
+  ;;;;;;;;;;;;;;;;;;;;
+  ;; Keys
+  ;; return word-jumping keys
+  (define-key org-mode-map (kbd "M-u") 'backward-word)
+  (define-key org-mode-map (kbd "M-o") 'forward-word) ; was (prefix)
+  ;; shifting nodes
+  (define-key org-mode-map (kbd "C-M-L") 'org-shiftmetaright)
+  (define-key org-mode-map (kbd "C-M-J") 'org-shiftmetaleft)
+
   ;; disable lines numbering (to increase performance)
   (linum-mode 0))
 (add-hook 'org-mode-hook 'my-org-mode-hook)
