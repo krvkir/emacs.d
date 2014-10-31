@@ -9,8 +9,12 @@
    (quote
     ("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" default)))
  '(default-input-method "russian-computer")
+ '(delete-selection-mode t)
+ '(dired-after-readin-hook (quote ergoemacs-setup-local-prefixes))
+ '(dirtrack-directory-change-hook (quote ergoemacs-shell-here-directory-change-hook))
  '(ecb-auto-activate nil)
  '(ecb-auto-compatibility-check nil)
+ '(ecb-compilation-predicates nil)
  '(ecb-compile-window-height 6)
  '(ecb-compile-window-temporally-enlarge (quote both))
  '(ecb-compile-window-width (quote edit-window))
@@ -65,22 +69,48 @@
  '(ecb-layout-window-sizes
    (quote
     (("leftright1"
-      (ecb-directories-buffer-name 0.03 . 0.65)
-      (ecb-sources-buffer-name 0.03 . 0.35)
-      (ecb-methods-buffer-name 0.1 . 0.65)
-      (ecb-history-buffer-name 0.1 . 0.35))
-     ("leftright1"
-      (ecb-directories-buffer-name 0.18 . 0.63)
-      (ecb-sources-buffer-name 0.1787709497206704 . 0.17)
-      (ecb-history-buffer-name 0.18 . 0.185)
-      (ecb-methods-buffer-name 0.162 . 0.99)))))
+      (ecb-directories-buffer-name 0.1455223880597015 . 0.6404494382022472)
+      (ecb-sources-buffer-name 0.1455223880597015 . 0.16853932584269662)
+      (ecb-history-buffer-name 0.1455223880597015 . 0.19101123595505617)
+      (ecb-methods-buffer-name 0.11940298507462686 . 1.0)))))
  '(ecb-options-version "2.40")
  '(ecb-primary-secondary-mouse-buttons (quote mouse-1--C-mouse-1))
  '(ecb-source-path (quote (("/" "/"))))
  '(ecb-tree-navigation-by-arrow nil)
  '(ecb-windows-width 0.3)
+ '(eshell-post-command-hook (quote ergoemacs-shell-here-directory-change-hook))
+ '(ido-vertical-define-keys (lambda nil (quote C-n-C-p-up-down-left-right)))
+ '(initial-scratch-message
+   (lambda nil
+     (substitute-command-keys ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with \\[find-file],
+;; then enter the text in that file's own buffer.")))
+ '(org-CUA-compatible nil)
  '(org-catch-invisible-edits (quote smart))
+ '(org-columns-default-format
+   "%50ITEM(Task) %PRIORITY %TODO %TAGS %Effort(EstTime){:} %CLOCKSUM(SpentTime)")
+ '(org-format-latex-options
+   (quote
+    (:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                 ("begin" "$1" "$" "$$" "\\(" "\\["))))
+ '(org-global-properties
+   (quote
+    (("Effort_ALL" . "0:30 1:00 1:30 2:00 2:30 3:00 3:30 4:00 4:30 5:00 5:30 6:00 6:30 7:00 7:30 8:00"))))
+ '(org-pomodoro-long-break-length 15)
+ '(org-replace-disputed-keys nil)
+ '(org-special-ctrl-a/e (lambda nil t))
  '(org-src-fontify-natively t)
+ '(org-support-shift-select (lambda nil t))
+ '(recentf-menu-before (lambda nil "Close"))
+ '(recentf-mode t)
+ '(scroll-error-top-bottom (lambda nil t))
+ '(set-mark-command-repeat-pop (lambda nil t))
+ '(shell-mode-hook (quote ergoemacs-shell-here-hook))
+ '(shift-select-mode (lambda nil t))
+ '(smex-prompt-string
+   (lambda nil
+     (substitute-command-keys "\\[execute-extended-command] ")))
+ '(tramp-verbose 10)
  '(word-wrap t))
 
 ;; packages
@@ -89,17 +119,24 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (package-initialize)
   )
+(add-to-list 'load-path "/usr/lib/node_modules/tern/emacs/")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Settings
 
+;; registers
+;; (set-register ?i (cons 'file "~/.emacs.d/init.el"))
+;; (set-register ?m (cons 'file "~/.emacs.d/my/"))
+;; (set-register ?i (cons 'file "~/.emacs.d/init.el"))
+
+;; some keybindings
+(global-unset-key (kbd "<f4>"))
+
 ;; disable backup files
 (setq make-backup-files nil)
 
-;; ;; bookmarks
-;; (global-set-key (kbd "C-b") 'bookmark-set)
-;; (global-set-key (kbd "M-b") 'bookmark-jump)
-;; (global-set-key (kbd "<f4>") 'bookmark-bmenu-list)
+;; bookmarks
+(global-set-key (kbd "<f4> b") 'bookmark-jump)
 
 ;; file paths in status line
 (require 'uniquify)
@@ -120,8 +157,23 @@
 (require 'ido)
 (defalias 'list-buffers 'ibuffer)
 (ido-mode 1)
+(ido-vertical-mode 1)
 (setq ido-default-buffer-method (quote selected-window))
 (setq ido-enable-flex-matching t)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Some packages needed to be loaded before ErgoEmacs
+;; (because of modes-specific keybindings which ErgoEmacs resets)
+
+;;;;;;;;;;;;;;;;;;;;
+;; Org-mode
+(load-file "~/.emacs.d/my/cfg-org.el")
+
+;;;;;;;;;;;;;;;;;;;;
+;; Mail client
+(load-file "~/.emacs.d/my/cfg-mu4e.el")
+(global-set-key (kbd "<f4> m") 'mu4e)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -131,10 +183,20 @@
 ;; Ergoemacs
 (require 'ergoemacs-mode)
 (load-file "~/.emacs.d/my/cfg-ergoemacs.el")
+;; (setq ergoemacs-theme "standard")
 (ergoemacs-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Tuning
+
+;; kill-whole-line
+(global-set-key (kbd "M-9") 'kill-whole-line)
+;; just-one-space
+(global-set-key (kbd "C-SPC") 'just-one-space)
+
+;; forward/backward-sexp
+(global-set-key (kbd "M-{") 'backward-sexp)
+(global-set-key (kbd "M-}") 'forward-sexp)
 
 ;; disable beeps
 (setq ring-bell-function 'ignore)
@@ -172,10 +234,22 @@
 ;; keymapping
 (global-set-key (kbd "№") (lambda () (interactive) (insert "#")))
 
+;; Set transparency of emacs
+(defun transparency (value)
+  "Sets the transparency of the frame window. 0=transparent/100=opaque"
+  (interactive "nTransparency Value 0 - 100 opaque:")
+  (set-frame-parameter (selected-frame) 'alpha value))
+(transparency 0.90)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Development
+
+;; multiple-cursors
+(require 'multiple-cursors)
+(global-set-key (kbd "M->") 'mc/mark-next-like-this)
+(global-set-key (kbd "M-<")   'mc/mark-previous-like-this)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; ECB and CEDET
@@ -190,7 +264,7 @@
 (global-semantic-decoration-mode t)
 (global-semantic-highlight-func-mode t)
 
-(global-unset-key (kbd "<f4>"))
+;; (global-unset-key (kbd "<f4>"))
 (defun krvkir-ecb-activate-hook ()
   ;; Turning on
   (semantic-mode t)
@@ -254,8 +328,8 @@
 ;; Indentation
 (setq-default indent-tabs-mode nil)
 (setq tab-width 4)
-(setq-default c-default-style "bsd"
-      c-basic-offset 4)
+;; (setq-default c-default-style "bsd"
+;;       c-basic-offset 4)
 
 
 
@@ -300,8 +374,8 @@
 (require 'flymake-php)
 (defun krvkir-php-mode-hook ()
   ;; code style
-  (c-set-style "bsd")
-  (setq c-basic-offset 4)
+  ;; (c-set-style "linux")
+  ;; (setq c-basic-offset 4)
   ;; code editing 
   (hs-minor-mode)
   (local-set-key (kbd "RET") 'c-context-line-break)
@@ -317,12 +391,37 @@
 (load-file "~/.emacs.d/my/php-helpers.el")
 (load-file "~/.emacs.d/my/phpdocumentor.el")
 
-;; ;;;;;;;;;;;;;;;;;;;;
-;; ;; JavaScript
-;; (require 'js-mode)
+;;;;;;;;;;;;;;;;;;;;
+;; Web-mode
+(defun krvkir-web-mode-hook ()
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 4)
+  )
+(add-hook 'web-mode-hook 'krvkir-web-mode-hook)
+
+;;;;;;;;;;;;;;;;;;;;
+;; JavaScript
+(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+
+(add-hook 'js-mode-hook 'js2-minor-mode)
+(add-hook 'js2-mode-hook 'ac-js2-mode)
+
+(setq js2-highlight-level 3)
+
+;; tern
+(autoload 'tern-mode "tern.el" nil t)
+
+(add-hook 'js-mode-hook (lambda () (tern-mode t)))
+(eval-after-load 'tern
+   '(progn
+      (require 'tern-auto-complete)
+      (tern-ac-setup)))
+
 ;; (defun my-js-mode-hook ()
 ;;   (local-set-key (kbd "RET") 'c-context-line-break))
 ;; (add-hook 'js-mode-hook 'my-js-mode-hook)
+
 
 ;; ;;;;;;;;;;;;;;;;;;;;
 ;; ;; Maxima
@@ -339,16 +438,3 @@
 ;;   ;; Open files in external app
 ;;   (local-set-key (kbd "<f3>") 'ergoemacs-open-in-external-app))
 ;; (add-hook 'dired-mode-hook 'my-dired-mode-hook)
-
-
-
-;;;;;;;;;;;;;;;;;;;;
-;; Org mode
-(load-file "~/.emacs.d/my/cfg-org.el")
-
-
-
-;; ;;;;;;;;;;;;;;;;;;;;
-;; ;; Which file to open
-;; (find-file "~/.emacs")
-;; (find-file "~/Org/todo.org")
