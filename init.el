@@ -5,9 +5,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#657b83" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#fdf6e3"))
  '(custom-safe-themes
    (quote
-    ("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" default)))
+    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" default)))
  '(default-input-method "russian-computer")
  '(delete-selection-mode t)
  '(dired-after-readin-hook (quote ergoemacs-setup-local-prefixes))
@@ -79,16 +83,29 @@
  '(ecb-tree-navigation-by-arrow nil)
  '(ecb-windows-width 0.3)
  '(eshell-post-command-hook (quote ergoemacs-shell-here-directory-change-hook))
- '(ido-vertical-define-keys (lambda nil (quote C-n-C-p-up-down-left-right)))
- '(initial-scratch-message
-   (lambda nil
-     (substitute-command-keys ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
-;; If you want to create a file, visit that file with \\[find-file],
-;; then enter the text in that file's own buffer.")))
+ '(fci-rule-color "#eee8d5")
+ '(ido-vertical-define-keys nil)
+ '(initial-scratch-message nil)
  '(org-CUA-compatible nil)
+ '(org-agenda-files
+   (quote
+    ("~/Org/ref.org" "~/workspace/cg/project.org" "~/Org/gtd.org")))
  '(org-catch-invisible-edits (quote smart))
+ '(org-clock-into-drawer t)
  '(org-columns-default-format
    "%50ITEM(Task) %PRIORITY %TODO %TAGS %Effort(EstTime){:} %CLOCKSUM(SpentTime)")
+ '(org-drawers (quote ("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "GOALS")))
+ '(org-emphasis-alist
+   (quote
+    (("*" bold)
+     ("/" italic)
+     ("_" underline)
+     ("=" org-verbatim verbatim)
+     ("~" org-code verbatim)
+     ("+"
+      (:strike-through t))
+     ("%"
+      (:background "yellow")))))
  '(org-format-latex-options
    (quote
     (:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
@@ -97,20 +114,48 @@
    (quote
     (("Effort_ALL" . "0:30 1:00 1:30 2:00 2:30 3:00 3:30 4:00 4:30 5:00 5:30 6:00 6:30 7:00 7:30 8:00"))))
  '(org-pomodoro-long-break-length 15)
+ '(org-pomodoro-long-break-sound
+   "/home/krvkir/.emacs.d/elpa/org-pomodoro-20140908.646/resources/beep-9.wav")
+ '(org-pomodoro-short-break-sound
+   "/home/krvkir/.emacs.d/elpa/org-pomodoro-20140908.646/resources/beep-9.wav")
+ '(org-pomodoro-sound
+   "/home/krvkir/.emacs.d/elpa/org-pomodoro-20140908.646/resources/beep-7.wav")
+ '(org-refile-targets
+   (quote
+    (("~/Org/ref.org" :maxlevel . 1)
+     (org-agenda-files :level . 1))))
  '(org-replace-disputed-keys nil)
- '(org-special-ctrl-a/e (lambda nil t))
  '(org-src-fontify-natively t)
- '(org-support-shift-select (lambda nil t))
- '(recentf-menu-before (lambda nil "Close"))
+ '(org-startup-folded t)
+ '(org-startup-truncated t)
+ '(recentf-menu-before nil)
  '(recentf-mode t)
- '(scroll-error-top-bottom (lambda nil t))
- '(set-mark-command-repeat-pop (lambda nil t))
  '(shell-mode-hook (quote ergoemacs-shell-here-hook))
- '(shift-select-mode (lambda nil t))
- '(smex-prompt-string
-   (lambda nil
-     (substitute-command-keys "\\[execute-extended-command] ")))
+ '(shift-select-mode nil)
+ '(smex-prompt-string nil)
  '(tramp-verbose 10)
+ '(vc-annotate-background nil t)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#dc322f")
+     (40 . "#cb4b16")
+     (60 . "#b58900")
+     (80 . "#859900")
+     (100 . "#2aa198")
+     (120 . "#268bd2")
+     (140 . "#d33682")
+     (160 . "#6c71c4")
+     (180 . "#dc322f")
+     (200 . "#cb4b16")
+     (220 . "#b58900")
+     (240 . "#859900")
+     (260 . "#2aa198")
+     (280 . "#268bd2")
+     (300 . "#d33682")
+     (320 . "#6c71c4")
+     (340 . "#dc322f")
+     (360 . "#cb4b16"))))
+ '(vc-annotate-very-old-color nil t)
  '(word-wrap t))
 
 ;; packages
@@ -135,7 +180,8 @@
 ;; disable backup files
 (setq make-backup-files nil)
 
-;; bookmarks
+;; bookmarks and registers
+(global-set-key (kbd "<f4> <f4>") 'jump-to-register)
 (global-set-key (kbd "<f4> b") 'bookmark-jump)
 
 ;; file paths in status line
@@ -226,7 +272,7 @@
 (setq inhibit-startup-echo-area-message t)
 
 ;; theme
-(load-theme 'sanityinc-solarized-light)
+;; (load-theme 'sanityinc-tomorrow-night)
 
 ;; info path
 (add-to-list 'Info-directory-list "/usr/share/info")
@@ -351,6 +397,7 @@
 (defun my-python-mode-hook ()
   ;; (set-input-method "TeX")
   (hs-minor-mode)
+  ;; (auto-complete-mode f)
   ;; (projectile-on)
   ;; (jedi:ac-setup)
   )
@@ -438,3 +485,10 @@
 ;;   ;; Open files in external app
 ;;   (local-set-key (kbd "<f3>") 'ergoemacs-open-in-external-app))
 ;; (add-hook 'dired-mode-hook 'my-dired-mode-hook)
+
+(load-file "~/.emacs.d/my/gnupg-fix.el")
+
+;; for org-mode (so reluctant to set these keys locally)
+(global-set-key (kbd "M-u") 'backward-word)
+(global-set-key (kbd "M-o") 'forward-word)
+
